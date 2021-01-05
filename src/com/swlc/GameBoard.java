@@ -51,13 +51,6 @@ public class GameBoard extends JPanel implements ActionListener {
     }
 
     private void initBoard() {
-
-        addKeyListener(new TAdapter());
-        setBackground(Color.MAGENTA.darker());
-        setFocusable(true);
-
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-        loadImages();
         startSnakeGame game = new startSnakeGame();
         new Thread(game).start();
         System.out.println("Start thread....");
@@ -74,15 +67,24 @@ public class GameBoard extends JPanel implements ActionListener {
 
         @Override
         public void run() {
-            dots = 4;
+            addKeyListener(new TAdapter());
+            setBackground(Color.MAGENTA.darker());
+            setFocusable(true);
 
-            for (int z = 0; z < dots; z++) {
-                x[z] = 50 - z * 10;
-                y[z] = 50;
-            }
+            setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
+            loadImages();
+            setDots();
             locateApple();
 
             timer.start();
+        }
+    }
+
+    public void setDots(){
+        dots = 4;
+        for (int z = 0; z < dots; z++) {
+            x[z] = 50 - z * 10;
+            y[z] = 50;
         }
     }
 
@@ -110,8 +112,18 @@ public class GameBoard extends JPanel implements ActionListener {
             Toolkit.getDefaultToolkit().sync();
 
         } else {
-
+            sleepSnake.interrupted();
             gameOver(g);
+        }
+    }
+
+    private class sleepSnake extends Thread{
+        public void run(){
+            try {
+                sleep(timer.getDelay());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -209,10 +221,8 @@ public class GameBoard extends JPanel implements ActionListener {
     }
 
     private class TAdapter extends KeyAdapter {
-
         @Override
         public void keyPressed(KeyEvent e) {
-
             int key = e.getKeyCode();
 
             if ((key == KeyEvent.VK_LEFT) && (!rightDirection)) {
