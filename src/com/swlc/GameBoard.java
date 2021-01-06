@@ -27,6 +27,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private boolean upDirection = false;
     private boolean downDirection = false;
     private boolean inGame = true;
+    private int totalScore = 0;
 
     private Timer timer = new Timer(DELAY,this);
     private Image ball;
@@ -95,7 +96,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
 
         if (inGame) {
-
+            totalScore(g);
             g.drawImage(apple, apple_x, apple_y, this);
 
             for (int z = 0; z < dots; z++) {
@@ -125,11 +126,20 @@ public class GameBoard extends JPanel implements ActionListener {
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
     }
 
+    private void totalScore(Graphics g) {
+        Font small = new Font("Helvetica", Font.BOLD, 15);
+
+        g.setColor(Color.CYAN);
+        g.setFont(small);
+        g.drawString("Total Score "+totalScore+" ",100,20);
+    }
+
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
 
             dots++;
+            totalScore += 1;
             locateApple();
         }
     }
