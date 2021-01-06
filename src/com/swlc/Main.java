@@ -8,8 +8,10 @@ public class Main {
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-            JFrame ex = new Snake();
-            ex.setVisible(true);
+            JFrame frame = new Snake();
+            frame.setTitle("Snake Game");
+            frame.setBackground(Color.black);
+            frame.setVisible(true);
         });
     }
 }

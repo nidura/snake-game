@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Board extends JPanel implements ActionListener {
+public class GameBoard extends JPanel implements ActionListener {
     private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;
@@ -28,12 +28,12 @@ public class Board extends JPanel implements ActionListener {
     private boolean downDirection = false;
     private boolean inGame = true;
 
-    private Timer timer;
+    private Timer timer = new Timer(DELAY,this);
     private Image ball;
     private Image apple;
     private Image head;
 
-    public Board() {
+    public GameBoard() {
 
         initBoard();
     }
@@ -41,7 +41,6 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (inGame) {
-
             checkApple();
             checkCollision();
             move();
@@ -53,39 +52,37 @@ public class Board extends JPanel implements ActionListener {
     private void initBoard() {
 
         addKeyListener(new TAdapter());
-        setBackground(Color.GRAY);
+        setBackground(Color.MAGENTA.darker());
         setFocusable(true);
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         loadImages();
-        initGame();
+        startSnakeGame game = new startSnakeGame();
+        new Thread(game).start();
+        System.out.println("Start thread....");
     }
 
     private void loadImages() {
-
-        ImageIcon iid = new ImageIcon("src/resources/dot.png");
-        ball = iid.getImage();
-
-        ImageIcon iia = new ImageIcon("src/resources/apple.png");
-        apple = iia.getImage();
-
-        ImageIcon iih = new ImageIcon("src/resources/head.png");
-        head = iih.getImage();
+        ImageLoader imageLoader = new ImageLoader();
+        ball = imageLoader.loadDot().getImage();
+        apple = imageLoader.loadApple().getImage();
+        head = imageLoader.loadSnakeHead().getImage();
     }
 
-    private void initGame() {
+    private class startSnakeGame implements Runnable{
 
-        dots = 3;
+        @Override
+        public void run() {
+            dots = 3;
 
-        for (int z = 0; z < dots; z++) {
-            x[z] = 50 - z * 10;
-            y[z] = 50;
+            for (int z = 0; z < dots; z++) {
+                x[z] = 50 - z * 10;
+                y[z] = 50;
+            }
+            locateApple();
+
+            timer.start();
         }
-
-        locateApple();
-
-        timer = new Timer(DELAY, this);
-        timer.start();
     }
 
     @Override
@@ -191,7 +188,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void locateApple() {
+    public void locateApple() {
 
         int r = (int) (Math.random() * RAND_POS);
         apple_x = ((r * DOT_SIZE));
