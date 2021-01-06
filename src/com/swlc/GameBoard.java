@@ -124,6 +124,7 @@ public class GameBoard extends JPanel implements ActionListener {
         g.setColor(Color.CYAN);
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        g.drawString("Total Score "+totalScore+" ",105,170);
     }
 
     private void totalScore(Graphics g) {
