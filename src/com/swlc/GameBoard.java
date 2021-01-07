@@ -74,7 +74,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         @Override
         public void run() {
-            dots = 3;
+            dots = 4;
 
             for (int z = 0; z < dots; z++) {
                 x[z] = 50 - z * 10;
