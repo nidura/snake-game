@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import static java.lang.Thread.sleep;
+
 public class GameBoard extends JPanel implements ActionListener {
     private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
@@ -112,16 +114,18 @@ public class GameBoard extends JPanel implements ActionListener {
             Toolkit.getDefaultToolkit().sync();
 
         } else {
-            sleepSnake.interrupted();
+            sleepSnake sleepSnake = new sleepSnake();
+            sleepSnake.run();
             gameOver(g);
         }
     }
 
-    private class sleepSnake extends Thread{
+    private class sleepSnake implements Runnable{
         public void run(){
             try {
                 sleep(timer.getDelay());
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 e.printStackTrace();
             }
         }
