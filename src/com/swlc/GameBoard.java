@@ -24,12 +24,12 @@ public class GameBoard extends JPanel implements ActionListener {
     private int apple_x;
     private int apple_y;
 
-    private boolean leftDirection = false;
-    private boolean rightDirection = true;
-    private boolean upDirection = false;
-    private boolean downDirection = false;
-    private boolean inGame = true;
-    private int totalScore = 0;
+    private static boolean leftDirection = false;
+    private static boolean rightDirection = true;
+    private static boolean upDirection = false;
+    private static boolean downDirection = false;
+    private static boolean inGame = true;
+    private static int totalScore = 0;
 
     private Timer timer = new Timer(DELAY,this);
     private Image ball;
@@ -52,13 +52,13 @@ public class GameBoard extends JPanel implements ActionListener {
         repaint();
     }
 
-    private void initBoard() {
+    public void initBoard() {
         startSnakeGame game = new startSnakeGame();
         new Thread(game).start();
         System.out.println("Start thread....");
     }
 
-    private void loadImages() {
+    public void loadImages() {
         ImageLoader imageLoader = new ImageLoader();
         ball = imageLoader.loadDot().getImage();
         apple = imageLoader.loadApple().getImage();
@@ -224,7 +224,12 @@ public class GameBoard extends JPanel implements ActionListener {
         apple_y = ((r * DOT_SIZE));
     }
 
-    private class TAdapter extends KeyAdapter {
+    public static class TAdapter extends KeyAdapter {
+
+        public TAdapter(){
+            return;
+        }
+
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
