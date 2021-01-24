@@ -1,10 +1,9 @@
 package com.swlc.test;
 
-import com.swlc.GameBoard;
-import com.swlc.GameBoard.TAdapter;
+import com.swlc.GameBoardController;
+import com.swlc.GameBoardController.TAdapter;
 import org.junit.Test;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 
@@ -13,13 +12,13 @@ public class SnakeTest {
 
     @Test
     public void initGame(){
-        GameBoard gameBoard = new GameBoard();
+        GameBoardController gameBoard = new GameBoardController();
         gameBoard.initBoard();
     }
 
     @Test
     public void imageLoadTest(){
-        GameBoard gameBoard = new GameBoard();
+        GameBoardController gameBoard = new GameBoardController();
         gameBoard.loadImages();
     }
 
@@ -33,7 +32,7 @@ public class SnakeTest {
 
     @Test
     public void locateApple(){
-        GameBoard gameBoard = new GameBoard();
+        GameBoardController gameBoard = new GameBoardController();
         gameBoard.locateApple();
     }
 }

@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 import static java.lang.Thread.sleep;
 
-public class GameBoard extends JPanel implements ActionListener {
+public class GameBoardController extends JPanel implements ActionListener {
     private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;
@@ -36,7 +36,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private Image apple;
     private Image head;
 
-    public GameBoard() {
+    public GameBoardController() {
 
         initBoard();
     }
